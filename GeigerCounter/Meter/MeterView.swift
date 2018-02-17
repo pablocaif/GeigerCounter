@@ -7,21 +7,79 @@
 //
 
 import UIKit
+import CoreGraphics
 
-class MeterView: UIView {
-
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
-        let centre = CGPoint(x: rect.size.width / 2.0, y: rect.size.height / 2.0)
+public class MeterView: UIView {
+    private var maxIndicatorValue: CGFloat = 100.0
+    private  var lastColor: CGColor?
+    private weak var indicator: IndicatorLayer?
+    private weak var meterTemplateLayer: MeterTemplateLayer?
+    
+    public var value: CGFloat = 0.0 {
+        didSet {
+            indicator?.value = value
+            lastColor = indicator?.indicatorColor
+            if lastColor == nil {
+                lastColor = UIColor.green.cgColor
+            }
+            guard let toColor = indicator?.colorForValue(value) else {return}
+            indicator?.indicatorColor = toColor
         
-        //let arch = UIBezierPath(arcCenter: centre, radius: centre.x * 0.95, startAngle: CGFloat.pi, endAngle: CGFloat(0.0), clockwise: true)
-        context?.setLineWidth(4.0)
-        context?.setStrokeColor(UIColor.black.cgColor)
-        context?.addArc(center: centre, radius: centre.x * 0.95, startAngle: CGFloat.pi, endAngle: CGFloat(0.0), clockwise: false)
-        context?.strokePath()
+            let animation = createAnimation(fromValue: oldValue, toValue: value, fromColor: lastColor!, toColor: toColor, time: 0.5)
+            
+            indicator?.add(animation, forKey: "value")
+        }
     }
- 
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        let indicator = IndicatorLayer()
+        layer.insertSublayer(indicator, at: 0)
+        indicator.backgroundColor = UIColor.clear.cgColor
+        indicator.shouldRasterize = true
+        indicator.rasterizationScale = UIScreen.main.scale
+
+        let templateLayer = MeterTemplateLayer()
+        templateLayer.backgroundColor = UIColor.clear.cgColor
+        templateLayer.shouldRasterize = true
+        templateLayer.rasterizationScale = UIScreen.main.scale
+        layer.addSublayer(templateLayer)
+        self.meterTemplateLayer = templateLayer
+        self.indicator = indicator
+    }
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        indicator?.frame = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: frame.size.height)
+        meterTemplateLayer?.frame = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: frame.size.height)
+    }
+
+
+    public override func draw(_ rect: CGRect) {
+        indicator?.setNeedsDisplay()
+        meterTemplateLayer?.setNeedsDisplay()
+    }
+
+    private func createAnimation(fromValue: CGFloat, toValue: CGFloat, fromColor: CGColor, toColor: CGColor, time: CFTimeInterval) -> CAAnimationGroup {
+        let valueAnimation = CABasicAnimation(keyPath: "value")
+        valueAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        valueAnimation.fromValue = fromValue
+        valueAnimation.fillMode = kCAFillModeForwards
+        valueAnimation.duration = time
+        valueAnimation.beginTime = 0.0
+        
+        let colorAnimation = CABasicAnimation(keyPath: "indicatorColor")
+        colorAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        colorAnimation.fromValue = fromColor
+        colorAnimation.duration = time
+        colorAnimation.beginTime = 0.0
+        colorAnimation.fillMode = kCAFillModeForwards
+        
+        let animationGroup = CAAnimationGroup()
+        animationGroup.animations = [valueAnimation, colorAnimation]
+        animationGroup.duration = time
+        return animationGroup
+    }
 
 }
+

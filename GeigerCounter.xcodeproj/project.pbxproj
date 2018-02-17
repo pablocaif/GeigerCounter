@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		657DD9846F35C8615215CD22 /* CALayer+Calculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657DD3FBDD04E77F64085542 /* CALayer+Calculation.swift */; };
+		657DDDB3877DF7C242EF8A2A /* MeterTemplateLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657DD1600C61FC282E49D74D /* MeterTemplateLayer.swift */; };
 		6EA4FCFD202EED8200750EAF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4FCFC202EED8200750EAF /* AppDelegate.swift */; };
 		6EA4FCFF202EED8200750EAF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4FCFE202EED8200750EAF /* MainViewController.swift */; };
 		6EA4FD02202EED8200750EAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EA4FD00202EED8200750EAF /* Main.storyboard */; };
@@ -14,8 +16,9 @@
 		6EA4FD07202EED8200750EAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EA4FD05202EED8200750EAF /* LaunchScreen.storyboard */; };
 		6EA4FD12202EED8200750EAF /* GeigerCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4FD11202EED8200750EAF /* GeigerCounterTests.swift */; };
 		6EA4FD1D202EED8200750EAF /* GeigerCounterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4FD1C202EED8200750EAF /* GeigerCounterUITests.swift */; };
-		6EA4FD2D202EEFC900750EAF /* GaugerMeterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4FD2C202EEFC900750EAF /* GaugerMeterViewController.swift */; };
+		6EA4FD2D202EEFC900750EAF /* GeigerMeterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4FD2C202EEFC900750EAF /* GeigerMeterViewController.swift */; };
 		6EA4FD30202EF9CD00750EAF /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4FD2F202EF9CD00750EAF /* MeterView.swift */; };
+		6EA4FD322030583100750EAF /* IndicatorLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA4FD312030583100750EAF /* IndicatorLayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		657DD1600C61FC282E49D74D /* MeterTemplateLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeterTemplateLayer.swift; sourceTree = "<group>"; };
+		657DD3FBDD04E77F64085542 /* CALayer+Calculation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Calculation.swift"; sourceTree = "<group>"; };
 		6EA4FCF9202EED8200750EAF /* GeigerCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeigerCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EA4FCFC202EED8200750EAF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EA4FCFE202EED8200750EAF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -49,8 +54,9 @@
 		6EA4FD18202EED8200750EAF /* GeigerCounterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeigerCounterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EA4FD1C202EED8200750EAF /* GeigerCounterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeigerCounterUITests.swift; sourceTree = "<group>"; };
 		6EA4FD1E202EED8200750EAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6EA4FD2C202EEFC900750EAF /* GaugerMeterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaugerMeterViewController.swift; sourceTree = "<group>"; };
+		6EA4FD2C202EEFC900750EAF /* GeigerMeterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeigerMeterViewController.swift; sourceTree = "<group>"; };
 		6EA4FD2F202EF9CD00750EAF /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
+		6EA4FD312030583100750EAF /* IndicatorLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +114,7 @@
 				6EA4FD03202EED8200750EAF /* Assets.xcassets */,
 				6EA4FD05202EED8200750EAF /* LaunchScreen.storyboard */,
 				6EA4FD08202EED8200750EAF /* Info.plist */,
-				6EA4FD2C202EEFC900750EAF /* GaugerMeterViewController.swift */,
+				6EA4FD2C202EEFC900750EAF /* GeigerMeterViewController.swift */,
 			);
 			path = GeigerCounter;
 			sourceTree = "<group>";
@@ -135,6 +141,9 @@
 			isa = PBXGroup;
 			children = (
 				6EA4FD2F202EF9CD00750EAF /* MeterView.swift */,
+				6EA4FD312030583100750EAF /* IndicatorLayer.swift */,
+				657DD1600C61FC282E49D74D /* MeterTemplateLayer.swift */,
+				657DD3FBDD04E77F64085542 /* CALayer+Calculation.swift */,
 			);
 			path = Meter;
 			sourceTree = "<group>";
@@ -273,10 +282,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EA4FD2D202EEFC900750EAF /* GaugerMeterViewController.swift in Sources */,
+				6EA4FD2D202EEFC900750EAF /* GeigerMeterViewController.swift in Sources */,
 				6EA4FCFF202EED8200750EAF /* MainViewController.swift in Sources */,
 				6EA4FD30202EF9CD00750EAF /* MeterView.swift in Sources */,
+				6EA4FD322030583100750EAF /* IndicatorLayer.swift in Sources */,
 				6EA4FCFD202EED8200750EAF /* AppDelegate.swift in Sources */,
+				657DDDB3877DF7C242EF8A2A /* MeterTemplateLayer.swift in Sources */,
+				657DD9846F35C8615215CD22 /* CALayer+Calculation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -430,7 +442,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

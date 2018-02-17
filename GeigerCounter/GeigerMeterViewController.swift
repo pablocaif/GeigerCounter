@@ -1,5 +1,5 @@
 //
-//  GaugerMeterViewController.swift
+//  GeigerMeterViewController.swift
 //  GeigerCounter
 //
 //  Created by Pablo Caif on 10/2/18.
@@ -8,19 +8,24 @@
 
 import UIKit
 
-class GaugerMeterViewController: UIViewController {
+class GeigerMeterViewController: UIViewController {
 
+    @IBOutlet weak var meterView: MeterView!
+    var timer: Timer?
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        timer = Timer(timeInterval: 1.0, repeats: true, block: updateValue)
+        RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    func updateValue(timer: Timer) {
+        let value = CGFloat(arc4random() % 100)
+        meterView.value = value
+    }
 
     /*
     // MARK: - Navigation

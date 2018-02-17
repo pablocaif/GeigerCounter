@@ -44,20 +44,20 @@
         <!--Meter-->
         <scene sceneID="dnK-MV-bee">
             <objects>
-                <viewController title="Meter" id="Zeo-kg-K76" customClass="GaugerMeterViewController" customModule="GeigerCounter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Meter" id="Zeo-kg-K76" customClass="GeigerMeterViewController" customModule="GeigerCounter" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YHW-E5-NP4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVM-WD-Eyg" customClass="MeterView" customModule="GeigerCounter" customModuleProvider="target">
                                 <rect key="frame" x="10" y="184" width="356" height="363"/>
-                                <color key="backgroundColor" red="1" green="0.3277699866048418" blue="0.33291043080592841" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="qVM-WD-Eyg" secondAttribute="height" multiplier="356:363" id="Fzt-nl-m1f"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="qVM-WD-Eyg" firstAttribute="centerX" secondItem="tts-to-nif" secondAttribute="centerX" id="0S3-U6-wsb"/>
                             <constraint firstItem="qVM-WD-Eyg" firstAttribute="width" secondItem="YHW-E5-NP4" secondAttribute="width" multiplier="0.95" id="dAL-IT-n7d"/>
@@ -65,6 +65,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tts-to-nif"/>
                     </view>
+                    <connections>
+                        <outlet property="meterView" destination="qVM-WD-Eyg" id="SL3-2C-gSJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="79r-r5-wi4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
