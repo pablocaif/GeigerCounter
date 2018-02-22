@@ -15,17 +15,17 @@ public class MeterView: UIView {
     private weak var indicator: IndicatorLayer?
     private weak var meterTemplateLayer: MeterTemplateLayer?
     
-    public var value: CGFloat = 0.0 {
+    public var radiationIndicatorValue: Float = 0.0 {
         didSet {
-            indicator?.value = value
+            indicator?.value = CGFloat(radiationIndicatorValue)
             lastColor = indicator?.indicatorColor
             if lastColor == nil {
                 lastColor = UIColor.green.cgColor
             }
-            guard let toColor = indicator?.colorForValue(value) else {return}
+            guard let toColor = indicator?.colorForValue(CGFloat(radiationIndicatorValue)) else {return}
             indicator?.indicatorColor = toColor
         
-            let animation = createAnimation(fromValue: oldValue, toValue: value, fromColor: lastColor!, toColor: toColor, time: 0.5)
+            let animation = createAnimation(fromValue: CGFloat(oldValue), toValue: CGFloat(radiationIndicatorValue), fromColor: lastColor!, toColor: toColor, time: 0.5)
             
             indicator?.add(animation, forKey: "value")
         }

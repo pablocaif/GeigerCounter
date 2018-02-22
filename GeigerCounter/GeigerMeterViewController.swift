@@ -11,20 +11,31 @@ import UIKit
 class GeigerMeterViewController: UIViewController {
 
     @IBOutlet weak var meterView: MeterView!
-    var timer: Timer?
+    @IBOutlet weak var status: UILabel!
+    @IBOutlet weak var battery: UILabel!
+    
+    //var timer: Timer?
+    let geigerMeterClient = GeigerMeterClient()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        timer = Timer(timeInterval: 1.0, repeats: true, block: updateValue)
-        RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
+       // timer = Timer(timeInterval: 1.0, repeats: true, block: updateValue)
+        //RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
+        geigerMeterClient.delegate = self
+        geigerMeterClient.startReading()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func updateValue(timer: Timer) {
-        let value = CGFloat(arc4random() % 100)
-        meterView.value = value
+//    func updateValue(timer: Timer?) {
+//        let value = Float(arc4random() % 100)
+//        meterView.radiationIndicatorValue = value
+//    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        geigerMeterClient.stopReading()
     }
 
     /*
@@ -38,3 +49,24 @@ class GeigerMeterViewController: UIViewController {
     */
 
 }
+
+extension GeigerMeterViewController: GeigerClientDelegate {
+    func clientDidUpdate(status: String) {
+        self.status.text = status
+    }
+    
+    func clientError(errorDescription: String) {
+        
+    }
+    
+    func radiationReadingArrived(radiation: Float) {
+        meterView.radiationIndicatorValue = radiation
+    }
+    
+    func cliendDidUpdate(batteryLevel: Float) {
+        battery.text = "Battery: \(batteryLevel)%"
+    }
+    
+    
+}
+
