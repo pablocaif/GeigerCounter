@@ -25,7 +25,7 @@ public class MeterView: UIView {
             guard let toColor = indicator?.colorForValue(CGFloat(radiationIndicatorValue)) else {return}
             indicator?.indicatorColor = toColor
         
-            let animation = createAnimation(fromValue: CGFloat(oldValue), toValue: CGFloat(radiationIndicatorValue), fromColor: lastColor!, toColor: toColor, time: 0.5)
+            let animation = createAnimation(fromValue: CGFloat(oldValue), toValue: CGFloat(radiationIndicatorValue), fromColor: lastColor!, toColor: toColor, time: 0.2)
             
             indicator?.add(animation, forKey: "value")
         }

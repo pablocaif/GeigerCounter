@@ -14,25 +14,25 @@ class GeigerMeterViewController: UIViewController {
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var battery: UILabel!
     
-    //var timer: Timer?
+    var timer: Timer?
     let geigerMeterClient = GeigerMeterClient()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // timer = Timer(timeInterval: 1.0, repeats: true, block: updateValue)
-        //RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
-        geigerMeterClient.delegate = self
-        geigerMeterClient.startReading()
+        timer = Timer(timeInterval: 0.40, repeats: true, block: updateValue)
+        RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
+//        geigerMeterClient.delegate = self
+//        geigerMeterClient.startReading()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-//    func updateValue(timer: Timer?) {
-//        let value = Float(arc4random() % 100)
-//        meterView.radiationIndicatorValue = value
-//    }
+    func updateValue(timer: Timer?) {
+        let value = Float(arc4random() % 100)
+        meterView.radiationIndicatorValue = value
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         geigerMeterClient.stopReading()
