@@ -19,10 +19,10 @@ class GeigerMeterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        timer = Timer(timeInterval: 0.40, repeats: true, block: updateValue)
-        RunLoop.main.add(timer!, forMode: RunLoopMode.commonModes)
-//        geigerMeterClient.delegate = self
-//        geigerMeterClient.startReading()
+        geigerMeterClient.delegate = self
+        geigerMeterClient.startReading()
+        timer = Timer(timeInterval: 4, repeats: true, block: requestBatteryRead)
+        //RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,8 +36,12 @@ class GeigerMeterViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         geigerMeterClient.stopReading()
+        timer?.invalidate()
     }
 
+    func requestBatteryRead(timer: Timer) {
+        geigerMeterClient.readBatteryLevel()
+    }
     /*
     // MARK: - Navigation
 
@@ -63,10 +67,13 @@ extension GeigerMeterViewController: GeigerClientDelegate {
         meterView.radiationIndicatorValue = radiation
     }
     
-    func cliendDidUpdate(batteryLevel: Float) {
+    func clientDidUpdate(batteryLevel: Int) {
         battery.text = "Battery: \(batteryLevel)%"
     }
     
+    func clientExecutedCommand() {
+        
+    }
     
 }
 
