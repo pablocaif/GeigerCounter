@@ -226,7 +226,7 @@ extension GeigerMeterClient: CBPeripheralDelegate {
             return
         }
         
-        if characteristic.uuid == radiationReadingCharacteristic {
+        if characteristic.uuid == radiationCountCharID {
            readRadiation(data: valueData)
         } else if characteristic.uuid == geigerBatteryLevelCharID {
             var batteryLevel = UInt8(0)

@@ -22,7 +22,7 @@ class GeigerMeterViewController: UIViewController {
         geigerMeterClient.delegate = self
         geigerMeterClient.startReading()
         timer = Timer(timeInterval: 4, repeats: true, block: requestBatteryRead)
-        //RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
+        RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
     }
 
     override func didReceiveMemoryWarning() {

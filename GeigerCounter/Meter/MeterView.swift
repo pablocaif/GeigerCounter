@@ -62,14 +62,14 @@ public class MeterView: UIView {
 
     private func createAnimation(fromValue: CGFloat, toValue: CGFloat, fromColor: CGColor, toColor: CGColor, time: CFTimeInterval) -> CAAnimationGroup {
         let valueAnimation = CABasicAnimation(keyPath: "value")
-        valueAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        valueAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         valueAnimation.fromValue = fromValue
         valueAnimation.fillMode = kCAFillModeForwards
         valueAnimation.duration = time
         valueAnimation.beginTime = 0.0
         
         let colorAnimation = CABasicAnimation(keyPath: "indicatorColor")
-        colorAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        colorAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         colorAnimation.fromValue = fromColor
         colorAnimation.duration = time
         colorAnimation.beginTime = 0.0
