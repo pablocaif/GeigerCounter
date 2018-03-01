@@ -125,11 +125,17 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
             blueCentralMgr?.stopScan()
             print("Hardware reseting")
         case .unauthorized:
-            print("Hardware unauthorised")
+            let message = "Hardware unauthorized"
+            print(message)
+            delegate?.clientError(errorDescription: message)
         case .unsupported:
-            print("Hardware unsoported")
+            let message = "Hardware unsupported"
+            print(message)
+            delegate?.clientError(errorDescription: message)
         case .unknown:
-            print("Hardware unknown")
+            let message = "Hardware unknown"
+            print(message)
+            delegate?.clientError(errorDescription: message)
         }
     }
     
@@ -233,8 +239,6 @@ extension GeigerMeterClient: CBPeripheralDelegate {
             valueData.copyBytes(to: &batteryLevel, count: MemoryLayout<UInt8>.size)
             delegate?.clientDidUpdate(batteryLevel: Int(batteryLevel))
         }
-        
-        
     }
     
     func readRadiation(data: Data) {
@@ -274,6 +278,6 @@ enum ReconnectionStep {
 }
 
 public enum GeigerCommand: UInt8 {
-    case satndBy = 0
+    case standBy = 0
     case on
 }

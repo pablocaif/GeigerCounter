@@ -68,23 +68,55 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czC-Ds-Xi2">
+                                <rect key="frame" x="20" y="557" width="150" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="QvY-Iv-nkO"/>
+                                    <constraint firstAttribute="width" constant="150" id="qte-gY-4pT"/>
+                                </constraints>
+                                <state key="normal" title="Stand by">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapStandBy:" destination="Zeo-kg-K76" eventType="touchUpInside" id="Fk6-iE-pAd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVf-X3-D46">
+                                <rect key="frame" x="205" y="557" width="150" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="283-NP-GAn"/>
+                                    <constraint firstAttribute="width" constant="150" id="qGn-Ig-FP1"/>
+                                </constraints>
+                                <state key="normal" title="Switch on">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapSwitchOn:" destination="Zeo-kg-K76" eventType="touchUpInside" id="YhS-8V-gSk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="tts-to-nif" firstAttribute="trailing" secondItem="UVf-X3-D46" secondAttribute="trailing" constant="20" id="0Rp-sq-ur9"/>
                             <constraint firstItem="qVM-WD-Eyg" firstAttribute="centerX" secondItem="tts-to-nif" secondAttribute="centerX" id="0S3-U6-wsb"/>
                             <constraint firstItem="tts-to-nif" firstAttribute="trailing" secondItem="Ock-Gf-fII" secondAttribute="trailing" constant="16" id="KXd-7B-SuH"/>
+                            <constraint firstItem="czC-Ds-Xi2" firstAttribute="leading" secondItem="tts-to-nif" secondAttribute="leading" constant="20" id="Y5J-DV-NnO"/>
                             <constraint firstItem="Lq8-9X-Ltd" firstAttribute="leading" secondItem="tts-to-nif" secondAttribute="leading" constant="10" id="YBH-zQ-sAD"/>
                             <constraint firstItem="Ock-Gf-fII" firstAttribute="top" secondItem="tts-to-nif" secondAttribute="top" constant="12" id="amg-Q2-Ti0"/>
                             <constraint firstItem="qVM-WD-Eyg" firstAttribute="width" secondItem="YHW-E5-NP4" secondAttribute="width" multiplier="0.95" id="dAL-IT-n7d"/>
                             <constraint firstItem="qVM-WD-Eyg" firstAttribute="centerY" secondItem="tts-to-nif" secondAttribute="centerY" id="eZX-G2-8rj"/>
                             <constraint firstItem="Lq8-9X-Ltd" firstAttribute="top" secondItem="tts-to-nif" secondAttribute="top" constant="12" id="fKP-so-4lq"/>
+                            <constraint firstItem="tts-to-nif" firstAttribute="bottom" secondItem="UVf-X3-D46" secondAttribute="bottom" constant="70" id="xcF-zJ-5qE"/>
+                            <constraint firstItem="tts-to-nif" firstAttribute="bottom" secondItem="czC-Ds-Xi2" secondAttribute="bottom" constant="70" id="y2c-TU-p9k"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tts-to-nif"/>
                     </view>
                     <connections>
                         <outlet property="battery" destination="Ock-Gf-fII" id="arb-PW-naR"/>
                         <outlet property="meterView" destination="qVM-WD-Eyg" id="SL3-2C-gSJ"/>
+                        <outlet property="standByButton" destination="czC-Ds-Xi2" id="oz8-0a-dBG"/>
                         <outlet property="status" destination="Lq8-9X-Ltd" id="9ub-h2-xoi"/>
+                        <outlet property="switchOnButton" destination="UVf-X3-D46" id="KH3-IK-gEg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="79r-r5-wi4" userLabel="First Responder" sceneMemberID="firstResponder"/>

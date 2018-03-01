@@ -13,12 +13,22 @@ class GeigerMeterViewController: UIViewController {
     @IBOutlet weak var meterView: MeterView!
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var battery: UILabel!
+    @IBOutlet weak var standByButton: UIButton!
+    @IBOutlet weak var switchOnButton: UIButton!
     
     var timer: Timer?
     let geigerMeterClient = GeigerMeterClient()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        standByButton.layer.borderWidth = 1.5
+        standByButton.layer.borderColor = UIColor.white.cgColor
+        standByButton.layer.cornerRadius = 7.0
+        
+        switchOnButton.layer.borderWidth = 1.5
+        switchOnButton.layer.borderColor = UIColor.white.cgColor
+        switchOnButton.layer.cornerRadius = 7.0
+        
         geigerMeterClient.delegate = self
         geigerMeterClient.startReading()
         timer = Timer(timeInterval: 4, repeats: true, block: requestBatteryRead)
@@ -42,6 +52,16 @@ class GeigerMeterViewController: UIViewController {
     func requestBatteryRead(timer: Timer) {
         geigerMeterClient.readBatteryLevel()
     }
+    
+    
+    @IBAction func didTapStandBy(_ sender: Any) {
+        geigerMeterClient.execute(command: GeigerCommand.standBy)
+    }
+    
+    @IBAction func didTapSwitchOn(_ sender: Any) {
+        geigerMeterClient.execute(command: GeigerCommand.on)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -60,7 +80,9 @@ extension GeigerMeterViewController: GeigerClientDelegate {
     }
     
     func clientError(errorDescription: String) {
-        
+        let alertControler = UIAlertController(title: "Error", message: errorDescription, preferredStyle: .alert)
+        alertControler.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alertControler, animated: true, completion: nil)
     }
     
     func radiationReadingArrived(radiation: Float) {
