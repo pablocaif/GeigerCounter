@@ -59,6 +59,7 @@
 		6EA4FD2F202EF9CD00750EAF /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 		6EA4FD312030583100750EAF /* IndicatorLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorLayer.swift; sourceTree = "<group>"; };
 		6EBF6DD220382A9A00D4361F /* GeigerMeterClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeigerMeterClient.swift; sourceTree = "<group>"; };
+		6EEAC7222047A96B00058C81 /* GeigerCounter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GeigerCounter.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +110,7 @@
 		6EA4FCFB202EED8200750EAF /* GeigerCounter */ = {
 			isa = PBXGroup;
 			children = (
+				6EEAC7222047A96B00058C81 /* GeigerCounter.entitlements */,
 				6EBF6DD12038215A00D4361F /* Bluetooth */,
 				6EA4FD2E202EF9A800750EAF /* Meter */,
 				6EA4FCFC202EED8200750EAF /* AppDelegate.swift */,
@@ -230,7 +232,10 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
+							};
+							com.apple.DataProtection = {
+								enabled = 0;
 							};
 						};
 					};

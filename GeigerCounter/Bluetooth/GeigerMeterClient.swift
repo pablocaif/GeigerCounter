@@ -141,15 +141,13 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
     
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print("Name \(advertisementData[CBAdvertisementDataLocalNameKey] ?? "Unknown") Peripheral name=\(peripheral.name ?? "") ID=\(peripheral.identifier.uuidString)\n")
-        if peripheral.name != nil {
-            print("Advertisement data \(advertisementData)")
-            print("Peripheral \(peripheral.debugDescription) \n")
-            central.stopScan()
-            geigerMeterPeripheral = peripheral
-            geigerMeterPeripheral!.delegate = self
-            central.connect(geigerMeterPeripheral!, options: nil)
-            reconnectionState = ReconnectionStep.connectingToDiscoveredPeripheral
-        }
+        print("Advertisement data \(advertisementData)")
+        print("Peripheral \(peripheral.debugDescription) \n")
+        central.stopScan()
+        geigerMeterPeripheral = peripheral
+        geigerMeterPeripheral!.delegate = self
+        central.connect(geigerMeterPeripheral!, options: nil)
+        reconnectionState = ReconnectionStep.connectingToDiscoveredPeripheral
     }
     
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -176,6 +174,7 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
             print("Server disconnected reconnecting....")
             scanForGeigerReader()
         }
+        delegate?.clientDidUpdate(status: "Disconnected")
     }
 }
 
@@ -258,10 +257,12 @@ extension GeigerMeterClient: CBPeripheralDelegate {
             if geigerCommandCharacteristic?.service.uuid == service.uuid {
                 geigerCommandCharacteristic = nil
                 radiationReadingCharacteristic = nil
+                delegate?.clientDidUpdate(status: "Disconnected")
             }
             
             if geigerBatteryCharacteristic?.service.uuid == service.uuid {
                 geigerBatteryCharacteristic = nil
+                delegate?.clientDidUpdate(status: "Disconnected")
             }
         }
     }
