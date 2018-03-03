@@ -33,7 +33,8 @@ public class GeigerMeterClient: NSObject {
     private var geigerBatteryCharacteristic: CBCharacteristic?
     private var geigerCommandCharacteristic: CBCharacteristic?
     private var shouldBeConnected = false
-    
+
+    //This variable tracks the reconnection when the app gets re-launched
     private var reconnectionState: ReconnectionStep?
     
     public weak var delegate: GeigerClientDelegate?
@@ -47,6 +48,8 @@ public class GeigerMeterClient: NSObject {
         }
     }
 
+    ///This function initiates the process of discovering peripherals, services and characteristics
+    ///and attempts to start reading
     public func startReading() {
         shouldBeConnected = true
         scanForGeigerReader()
@@ -62,11 +65,13 @@ public class GeigerMeterClient: NSObject {
         }
     }
     
+    ///This function will request the current battery level to the peripheral
     public func readBatteryLevel() {
         guard let peripheral = geigerMeterPeripheral, let batteryChar = geigerBatteryCharacteristic else {return}
         peripheral.readValue(for: batteryChar)
     }
-    
+
+    ///This function will write the command to the peripheral
     public func execute(command: GeigerCommand) {
         guard let peripheral = geigerMeterPeripheral, let commandChar = geigerCommandCharacteristic else {return}
         var commandCode = command.rawValue
@@ -144,6 +149,7 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
         print("Advertisement data \(advertisementData)")
         print("Peripheral \(peripheral.debugDescription) \n")
         central.stopScan()
+        //We stop scanning, store the peripheral and discover services
         geigerMeterPeripheral = peripheral
         geigerMeterPeripheral!.delegate = self
         central.connect(geigerMeterPeripheral!, options: nil)
@@ -153,6 +159,7 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("Connected to \(peripheral.debugDescription)")
         delegate?.clientDidUpdate(status: "Connected to \(peripheral.name ?? peripheral.identifier.uuidString)")
+        //Trigger services discovery process
         peripheral.discoverServices([serviceGeigerCounterID, geigerBatteryServiceID])
         peripheral.delegate = self
         UserDefaults.standard.set(peripheral.identifier.uuidString, forKey: peripheralIDKey)
@@ -162,6 +169,7 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         guard let error = error else {return}
         print("Peripheral fail to connect \(peripheral.debugDescription) error=\(error.localizedDescription)")
+        //If we can't connect to a previously known peripheral we start scanning again
         if reconnectionState == ReconnectionStep.connectingToSavedPeripheral {
             attemptReconnectionForSavedPeripheral()
         } else {
@@ -170,6 +178,7 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
     }
     
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        //If we wanted to keep the connection we attempt to reconnect
         if shouldBeConnected {
             print("Server disconnected reconnecting....")
             scanForGeigerReader()
@@ -183,6 +192,7 @@ extension GeigerMeterClient: CBPeripheralDelegate {
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         peripheral.services?.forEach({ (service) in
             print("Service \(service.description) ID=\(service.uuid.uuidString)")
+            //Once we've got the services we try to discover the characteristics for each one
             peripheral.discoverCharacteristics(nil, for: service)
         })
     }
@@ -191,6 +201,7 @@ extension GeigerMeterClient: CBPeripheralDelegate {
         service.characteristics?.forEach({ (characteristic) in
             print("Characteristic \(characteristic.uuid.uuidString) for service \(service.description) pheriferal \(peripheral.description)")
             geigerMeterPeripheral?.discoverDescriptors(for: characteristic)
+            //If we find the characteristics we are interested in we save them
             switch characteristic.uuid {
             case radiationCountCharID:
                 radiationReadingCharacteristic = characteristic
@@ -213,6 +224,8 @@ extension GeigerMeterClient: CBPeripheralDelegate {
     }
 
     public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
+        //For now we are not doing much more with the descriptors but on a real application we might want to process
+        //the type so that we know how to consume the characteristic
         print("Characteristic=\(descriptor.characteristic.uuid.uuidString), descriptor value=\(String(describing: descriptor.value))")
     }
     
@@ -230,7 +243,8 @@ extension GeigerMeterClient: CBPeripheralDelegate {
         guard let valueData = characteristic.value else {
             return
         }
-        
+        //We've got a new value for a characteristic. It could be a notification from a characteristic we subscribed or
+        //it could be the response to a read request we initiated
         if characteristic.uuid == radiationCountCharID {
            readRadiation(data: valueData)
         } else if characteristic.uuid == geigerBatteryLevelCharID {
@@ -241,6 +255,7 @@ extension GeigerMeterClient: CBPeripheralDelegate {
     }
     
     func readRadiation(data: Data) {
+        //Extract the radiation reading from the data
         let readingSize = MemoryLayout<Float32>.size
         let number = UnsafeMutablePointer<Float32>.allocate(capacity: 1)
         number.initialize(to: 0.0)

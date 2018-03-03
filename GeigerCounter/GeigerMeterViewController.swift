@@ -31,17 +31,13 @@ class GeigerMeterViewController: UIViewController {
         
         geigerMeterClient.delegate = self
         geigerMeterClient.startReading()
+        //This timer will pool for the battery level every 4 seconds
         timer = Timer(timeInterval: 4, repeats: true, block: requestBatteryRead)
         RunLoop.current.add(timer!, forMode: RunLoopMode.commonModes)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    func updateValue(timer: Timer?) {
-        let value = Float(arc4random() % 100)
-        meterView.radiationIndicatorValue = value
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -61,17 +57,6 @@ class GeigerMeterViewController: UIViewController {
     @IBAction func didTapSwitchOn(_ sender: Any) {
         geigerMeterClient.execute(command: GeigerCommand.on)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension GeigerMeterViewController: GeigerClientDelegate {
@@ -80,12 +65,13 @@ extension GeigerMeterViewController: GeigerClientDelegate {
     }
     
     func clientError(errorDescription: String) {
-        let alertControler = UIAlertController(title: "Error", message: errorDescription, preferredStyle: .alert)
-        alertControler.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alertControler, animated: true, completion: nil)
+        let alertController = UIAlertController(title: "Error", message: errorDescription, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func radiationReadingArrived(radiation: Float) {
+        //We have received a new meter reading let's ask the view to draw it
         meterView.radiationIndicatorValue = radiation
     }
     
