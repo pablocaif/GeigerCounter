@@ -160,7 +160,7 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
         print("Connected to \(peripheral.debugDescription)")
         delegate?.clientDidUpdate(status: "Connected to \(peripheral.name ?? peripheral.identifier.uuidString)")
         //Trigger services discovery process
-        peripheral.discoverServices([serviceGeigerCounterID, geigerBatteryServiceID])
+        peripheral.discoverServices(nil)
         peripheral.delegate = self
         UserDefaults.standard.set(peripheral.identifier.uuidString, forKey: peripheralIDKey)
         reconnectionState = nil
@@ -190,11 +190,22 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
 // MARK: CBPeripheralDelegate
 extension GeigerMeterClient: CBPeripheralDelegate {
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        peripheral.services?.forEach({ (service) in
-            print("Service \(service.description) ID=\(service.uuid.uuidString)")
-            //Once we've got the services we try to discover the characteristics for each one
-            peripheral.discoverCharacteristics(nil, for: service)
-        })
+        guard let services = peripheral.services else {return}
+        var foundService = false
+        for service in services {
+            if service.uuid == geigerBatteryServiceID || service.uuid == serviceGeigerCounterID {
+                print("Service \(service.description) ID=\(service.uuid.uuidString)")
+                //Once we've got the services we try to discover the characteristics for each one
+                peripheral.discoverCharacteristics(nil, for: service)
+                foundService = true
+            }
+        }
+        //If the service was not found we discard the saved peripheral and scan again
+        if !foundService {
+            UserDefaults.standard.removeObject(forKey: peripheralIDKey)
+            scanForPeripheral()
+        }
+        
     }
 
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
