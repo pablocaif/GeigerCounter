@@ -160,8 +160,8 @@ extension GeigerMeterClient: CBCentralManagerDelegate {
         print("Connected to \(peripheral.debugDescription)")
         delegate?.clientDidUpdate(status: "Connected to \(peripheral.name ?? peripheral.identifier.uuidString)")
         //Trigger services discovery process
-        peripheral.discoverServices(nil)
         peripheral.delegate = self
+        peripheral.discoverServices(nil)
         UserDefaults.standard.set(peripheral.identifier.uuidString, forKey: peripheralIDKey)
         reconnectionState = nil
     }
